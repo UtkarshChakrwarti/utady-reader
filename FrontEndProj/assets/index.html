@@ -1,0 +1,128 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ImageToText</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+    />
+    <script src="js/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+        <!--Centered div with roboto font-->
+        <div class="center">
+            <!-- Bootstrap jumbo header-->
+          <h1>Utady Reader</h1>
+          <!-- Text Description -->
+          <p>
+            Scan any text image in 90+ Languages<br />
+             and get the text in your language
+            <br>
+            Upload any image from gallery to extract Text,
+            <br>
+            Share it ! Where You want.
+          </p>
+          
+          <input autocomplete="off" role="combobox" list="" id="input" name="languages" placeholder="Select Language">
+       
+          <datalist id="languages" role="listbox">
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Tamil">Tamil</option>
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Tamil">Tamil</option>
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+            <option value="Marathi">Marathi</option>
+            <option value="Gujarati">Gujarati</option>
+            <option value="Bengali">Bengali</option>
+            <option value="Tamil">Tamil</option>
+          </datalist>
+        </div>
+        
+        <div class="center">
+          <button id ="upload" onclick="openImage()">
+            <!-- image -->
+            Get Text from Image </button>
+        </div>
+    </div>
+       <!--Script for custom option_list-->
+       <!--Todo : write openImage Function -->
+        <script type="text/javascript">
+            input.onfocus = function () {
+            languages.style.display = "block";
+            upload.style.display = "none";
+            
+            };
+            for (let option of languages.options) {
+            option.onclick = function () {
+                input.value = option.value;
+                languages.style.display = "none";
+                upload.style.display = "block";
+                
+            };
+            }
+            
+            //hide option_list on click outside
+            document.addEventListener("click", function (event) {
+            const isClickInside = input.contains(event.target);
+            if (!isClickInside) {
+                languages.style.display = "none";
+                upload.style.display = "block";
+            }
+            });
+
+            input.oninput = function () {
+            currentFocus = -1;
+            var text = input.value.toUpperCase();
+            for (let option of languages.options) {
+                if (option.value.toUpperCase().indexOf(text) > -1) {
+                option.style.display = "block";
+                } else {
+                option.style.display = "none";
+                }
+            }
+            };
+            var currentFocus = -1;
+            input.onkeydown = function (e) {
+            if (e.keyCode == 40) {
+                currentFocus++;
+                addActive(languages.options);
+            } else if (e.keyCode == 38) {
+                currentFocus--;
+                addActive(languages.options);
+            } else if (e.keyCode == 13) {
+                e.preventDefault();
+                if (currentFocus > -1) {
+                /*and simulate a click on the "active" item:*/
+                if (languages.options) languages.options[currentFocus].click();
+                }
+            }
+            };
+
+            function addActive(x) {
+            if (!x) return false;
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = x.length - 1;
+            x[currentFocus].classList.add("active");
+            }
+
+            function removeActive(x) {
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("active");
+            }
+            }
+
+        </script>
+</html>
